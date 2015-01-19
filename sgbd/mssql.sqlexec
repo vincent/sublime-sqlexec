@@ -1,0 +1,24 @@
+{
+    "sql_exec": {
+        "options": ["-f", "table"],
+        "before": [],
+        "args": "mssql -s {options.host} -u {options.username} -p {options.password} -d {options.database} -e ",
+        "queries": {
+            "desc" : {
+                "query": "SELECT Distinct CONCAT('|', TABLE_NAME) FROM information_schema.TABLES",
+                "options": ["-f", "table"],
+                "format" : "|%s|"
+            },
+            "desc table": {
+                "query": "EXEC sp_columns %s",
+                "options": ["-f", "table"],
+                "format" : "|%s|"
+            },
+            "show records": {
+                "query": "SELECT TOP 100 * FROM %s",
+                "options": ["-f", "table"],
+                "format" : "|%s|"
+            }
+        }
+    }
+}
